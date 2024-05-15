@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "common.h"
 #include "formula.h"
@@ -61,7 +61,7 @@ private:
     	mutable std::optional<FormulaInterface::Value> cache_;
     };
     // проверка наличия циклических зависимостей
-    bool FindCyclicDependencies(const Impl& impl) const;
+    bool FindCyclicDependencies(std::unordered_set<Position>& visited_positions) const;
     void InvalidateCache(bool force = false);
 
 private:

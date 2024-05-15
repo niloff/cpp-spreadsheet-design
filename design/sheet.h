@@ -29,5 +29,16 @@ private:
     void PrintCells(std::ostream& output,
                     const std::function<void(const CellInterface&)>& printCell) const;
 
-    std::vector<std::vector<std::unique_ptr<Cell>>> cells_;
+    struct TableHasher {
+        std::size_t operator()(const Position &pos) const {
+            return std::hash<std::string>()(pos.ToString());
+        }
+    };
+
+    struct TableComparator {
+    	std::size_t operator()(const Position& lhs, const Position& rhs) const {
+            return lhs == rhs;
+        }
+    };
+    std::unordered_map<Position, std::unique_ptr<Cell>, TableHasher, TableComparator> table;
 };
